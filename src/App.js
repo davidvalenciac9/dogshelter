@@ -7,6 +7,7 @@ import whiskey from './imgs/whiskey.jpg';
 import hazel from './imgs/hazel.jpg';
 import tubby from './imgs/tubby.jpg';
 import {Switch, Route} from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid';
 
 class App extends React.Component {
   static defaultProps = {
@@ -44,6 +45,15 @@ class App extends React.Component {
     ],
   };
   render () {
+    /***ACTUAL SOLUTION to pass the correct dog and avoiding if statment at dogcard component  ***/
+    //const getDog = props => {
+    //  let name = props.match.params.name;
+    //  let currentDog = this.props.dogs.find (
+    //    dog => dog.name.toLowerCase () === name.toLowerCase ()
+    //  );
+    //  return <DogCard {...routeProps} dog={currentDog} />;
+    //};
+
     return (
       <div className="App">
         <Navbar dogs={this.props.dogs} />
@@ -56,7 +66,9 @@ class App extends React.Component {
           <Route
             exact
             path="/dogs/:dogName"
-            render={routeProps => <DogCard {...routeProps} />}
+            render={routeProps => (
+              <DogCard {...routeProps} dogs={this.props.dogs} key={uuidv4 ()} />
+            )}
           />
         </Switch>
       </div>
